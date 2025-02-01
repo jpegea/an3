@@ -1,0 +1,928 @@
+\documentclass[12pt]{book}
+
+\usepackage{mathtools, amssymb, amsthm}
+\usepackage[catalan]{babel}
+\usepackage[papersize={156mm,234mm}, margin=0.7cm, includeheadfoot]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[vvarbb, helvratio=.87, nott]{newtx}
+\usepackage[bf, sf]{titlesec}
+\usepackage[shortlabels]{enumitem}
+\RequirePackage[colorlinks]{hyperref}
+
+\author{Quim Pascual Egea}
+\title{Anàlisi Matemàtica III}
+\date{2025}
+
+\def\data#1{\noindent\textcolor{blue}{\sffamily #1}}
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textsf{\itshape #1}}
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{prop}[teorema]{Proposició}
+\newtheorem{coro}[teorema]{Coro\l.lari}
+\theoremstyle{definition}
+\newtheorem{defi}[teorema]{Definició}
+\newtheoremstyle{nota}{}{}{\sffamily}{}{\bfseries\sffamily\color{purple!85!black}}{.}{.5em}{}
+\theoremstyle{nota}
+\newtheorem{nota}[teorema]{Nota}
+\newtheoremstyle{exemple}{}{}{\sffamily}{}{\bfseries\sffamily\color{green!40!black}}{.}{.5em}{}
+\theoremstyle{exemple}
+\newtheorem{exemple}[teorema]{Exemple}
+\RequirePackage[colorlinks]{hyperref}
+
+\begin{document}
+
+\makeatletter
+\begin{titlepage}
+  \noindent\Huge
+  \begin{center}
+    \textbf{\@title}
+  \end{center}
+  \vfill
+
+  \noindent\large\sffamily
+  Apunts de l'assignatura
+  \hfill
+  \@author
+\end{titlepage}
+\makeatother
+
+% \chapter*{Nota preeliminar}
+% \sffamily Aquests apunts segueixen el curs d'Anàlisi Matemàtica 3 del
+% curs 2024 -- 2025 impartit per Javier Falcó Benavent.
+
+\tableofcontents
+
+\chapter{Preeliminars}
+
+\section{Espais normats}
+
+La mètrica usual en $\mathbb{R}$ és la distància eucídea entre dos
+punts $x,\, y \in \mathbb{R}$, donada per $d(x,y) = |x-y|$. Aquest
+concepte es generalitza a espais vectorials utilitzant la noció de
+norma.
+
+\begin{defi}[Espai normat]
+  Un espai normat és un parell $(E, \|\cdot\|)$, on $E$ és un espai
+  vectorial sobre el cos $\mathbb{K}$ ($\mathbb{R}$ o $\mathbb{C}$) i
+  $\|\cdot\|$ és una funció anomenada norma, que satifà les següents
+  propietats:
+  \begin{description}[noitemsep]
+  \item[Positivitat] $\|x\| \geq 0$, i $\|x\| = 0$ si, i només si,
+    $x = 0$.
+  \item[Homogeneïtat] $\|\lambda x\| = |\lambda| \|x\|$ per a tot
+    $\lambda \in \mathbb{K}$ i $x \in E$.
+  \item[Desigualtat triangular] $\|x + y\| \leq \|x\| + \|y\|$ per a
+    tot $x,\, y \in E$.
+  \end{description}
+  Quan no hi haja ambigüitat, denotarem l'espai normat simplement com
+  $E$.
+\end{defi}
+
+Un espai normat permet mesurar la longitud dels vectors i definir
+conceptes com distància i convergència.
+
+\begin{exemple}
+  En l'espai $\mathbb{R}^n$, podem definir diferents normes. Les més
+  comuns són
+  \begin{align*}
+    &\|x\|_1 = \sum_{i=1}^n|x_i|, &
+    &\|x\|_2 = \Big( \sum_{i=1}^{n} |x_i|^2 \Big)^{\frac{1}{2}}, &
+    &\|x\|_\infty = \max_{1 \leq 1 \leq n} |x_i|.
+  \end{align*}
+  No obstant això, també podem definir normes en espais més
+  sofisticats, com és el cas de l'espai de les funcions contínues en
+  un interval $[a,b]$ amb la norma
+  \[
+    \|f\| = \max_{x \in [a,b]} |f(x)|.
+  \]
+\end{exemple}
+
+El concepte de norma ens recorda al concepte de mètrica. Recordem la
+definició de mètrica sobre un conjunt $X$.
+
+\begin{defi}[Mètrica]
+  Una mètrica en un conjunt $X$ és una funció
+  $d : X \times X \to \mathbb{R}$ que satisfà les següents propietats
+  per a tot $x, \, y, \, z, \, \in X$:
+  \begin{description}[noitemsep]
+  \item[Positivitat] $d(x,y) \geq 0$, i $d(x,y) = 0$ si, i només si, $x = y$.
+  \item[Simetria] $d(x,y) = d(y,x)$.
+  \item[Desigualtat triangular] $d(x,y) \leq d(x,z) + d(z,y)$.
+  \end{description}
+\end{defi}
+
+\begin{defi}[Mètrica induïda]
+  La mètrica induïda per una norma $\|\cdot\|$ en un espai vectorial
+  normat $(E, \|\cdot\|)$ es defineix com
+  \[
+    d(x,y) = \|x - y\|, \quad x,\, y \in E.
+  \]
+\end{defi}
+
+\begin{nota}
+  Encara que tota norma indueix una mètrica, no totes les mètriques
+  provenen de normes. Un exemple clàssic de mètrica que no prové d'una
+  norma és la mètrica discreta definida en qualsevol conjunt $X$,
+  \[
+    d(x,y) =
+    \begin{cases}
+      0 & \text{si}\; x = y, \\
+      1 & \text{si}\; x \neq y.
+    \end{cases}
+  \]
+  Una propietat destacada de la mètrica induïda per una norma és que
+  aquesta és invariant per translacions. És a dir, per a tot
+  $x,\, y,\, z \in E$, es compleix que
+  \[
+    d(x,y) = d(x+z, y+z).
+  \]
+\end{nota}
+
+\begin{defi}[Bola]
+  Siga $E$ un espai vectorial normat i $x_0 \in E$. Una bola oberta de
+  centre $x_0$ i radi $r > 0$ és el conjunt
+  \[
+    B(x_0, r) = \{ x \in E : \|x - x_0\| < r \}.
+  \]
+\end{defi}
+
+Notem que la bola oberta de radi $r$ centrada en $x_0$ coincideix amb
+la bola oberta de radi $r$ centrada en l'origen traslladada per $x_0$,
+\[
+  B(x_0, r) = x_0 + B(0,r).
+\]
+Per tant, la bola oberta de radi $r$ centrada en l'origen és un
+conjunt fonamental en la topologia d'un espai vectorial normat que
+conté tota la informació topològica de l'espai.
+
+\begin{prop}[Propietats addicionals de la norma]
+  Siga $E$ un espai vectorial normat i siguen $x, \, y \in E$,
+  aleshores tenim les següents propietats.
+  \begin{description}[noitemsep]
+  \item[Continuïtat] $\|\cdot\|$ és contínua respecte a la topologia
+    induïda per la mètrica $d(x,y) = \|x - y\|$.
+  \item[Convexitat de boles] Tota bola oberta
+    $B(x_0, r) = \{y \in E : \|y - x_0\| < r\}$ és un conjunt convex.
+  \item[Escalabilitat] Si $\|x\| = 1$, aleshores
+    $\|\lambda x\| = |\lambda|$ per a tot $\lambda \in \mathbb{K}$.
+  \end{description}
+\end{prop}
+
+Com hem mencionat, la bola oberta de radi $r$ centrada en l'origne
+conté tota la informació topològica de l'espai. Per tant, la primera
+propietat de la proposició anterior pot millorar-se obtenint que la
+norma és uniformement contínua en l'espai.
+
+Recordem que una funció $f : X \to Y$ és uniformement contínua si la
+variació de la funció no depén de l'elecció dels punts en el
+domini. És a dir, és uniformementcontínua si donat un $\epsilon > 0$
+existeix un $\delta > 0$ tal que si $d(x,y) < \delta$, aleshores
+$d(f(x), f(y)) < \epsilon$.
+
+\begin{prop}[Continuïtat uniforme de la norma]
+  La norma $\|\cdot\|$ és uniformement contínua en $E$.
+\end{prop}
+
+\begin{proof}
+  Donats $x, \, y \in E$, per la desigualtat triangular tenim
+  \begin{equation*}
+    \left.
+      \begin{aligned}
+        \|x\| &\leq \|x-y\| - \|y\| & \implies \|x\|-\|y\| &\leq \|x-y\| \\
+        \|y\| &\leq \|x-y\| - \|x\| & \implies \|y\|-\|x\| &\leq \|x-y\|
+      \end{aligned} \;\;
+    \right\} \;\;
+    \left| \|x\| - \|y\| \right| \leq \|x-y\|.
+  \end{equation*}
+  Recordem que $\|\cdot\| : E \to \mathbb{R}^+ \cup \{0\}$. Donat
+  $\epsilon > 0$, considerem $\delta = \epsilon$. Aleshores,
+  $\left| \|x\| - \|y\| \right| \leq \|x - y\| \leq \delta = \epsilon$
+  per a tot $\|x-y\| \leq \delta$. És a dir, la norma és contínuament
+  uniforme.
+\end{proof}
+
+Recordem que una aplicació lineal entre espais vectorials és una
+aplicació que respecta l'estructura d'espai vectorial, és a dir, les
+operacions de suma de vectors i producte per escalars.
+
+\begin{defi}[Aplicació lineal]
+  Siguen $E$ i $F$ dos espais vectorials sobre un camp
+  $\mathbb{K}$. Una aplicació $T : E \to F$ es diu que és lineal si
+  per a tot $x, \, y \in E$ i tot $\lambda \in \mathbb{K}$ es compleix
+  que
+  \begin{enumerate}[nosep]
+  \item $T(x + y) = T(x) + T(y)$,
+  \item $T(\lambda x) = \lambda T(x)$.
+  \end{enumerate}
+\end{defi}
+
+\begin{teorema}[Caracterització de la continuïtat d'aplicacions lineals]
+  \label{teo:caracterització_continuïtat}
+  Siguen $(E, \|\cdot\|_E)$ i $(F, \|\cdot\|_F)$ dos espais normats i
+  $T : E \to F$ una aplicació lineal. Aleshores, les següents
+  afirmacions són equivalents.
+  \begin{enumerate}
+  \item\label{c_cont:1} $T$ és contínua en $E$.
+  \item\label{c_cont:2} $T$ és contínua en l'origen de $E$.
+  \item\label{c_cont:3} Existeix una constant $C > 0$ tal que per a
+    tot $x \in E$ es compleix que $\|T(x)\|_F \leq C \|x\|_E$.
+  \item\label{c_cont:4} Existeix una constant $C > 0$ tal que per a
+    tot $x \in B_E$ es compleix que $\|T(x)\|_F \leq C$.
+  \item\label{c_cont:5} El conjunt $T(B_E)$ és fitat en $F$.
+  \end{enumerate}
+\end{teorema}
+
+\begin{proof}
+  La implicació $(\ref{c_cont:1}) \to (\ref{c_cont:2})$ és
+  directa. Per a $(\ref{c_cont:2}) \to (\ref{c_cont:3})$ observem que
+  $T$ és contínua en $0$ i és lineal. Per tant, $T(0) = 0$ i existeix
+  $r > 0$ tal que $B_E(0,r) \subset T^{-1}(B_F(0,1))$. Per tant, per a
+  tot $x \in B_E(0,r)$ tenim que $T(x) \in B_F(0,1)$. Així,
+  $\|T(x)\|_F \leq 1$, però
+  \[
+    \|T(x)\|_F = \frac{\|x\|_E}{r} \underbrace{\left\| \,
+        T\left(\frac{rx}{\|x\|_E}\right) \, \right\|_F}_{\leq 1} \leq
+    \frac{\|x\|_E}{r}.
+  \]
+  Així, considerant $C = \frac{1}{r}$ tenim el que volíem demostrar.
+  $(\ref{c_cont:3}) \to (\ref{c_cont:4}) \to (\ref{c_cont:5})$ és
+  directe i sols queda demostrar
+  $(\ref{c_cont:5}) \to (\ref{c_cont:1})$. Que $T(B_E)$ siga fitat
+  implica que existeix $C > 0$ amb $\|T(x)\| \leq C$ per a tot
+  $x \in B_E$. Fixat $x_0 \in E$ i donat $\epsilon > 0$, considerem
+  $\delta = \frac{\epsilon}{C}$. Aleshores si $y \in E$ amb
+  $\|x_0 - y\| < \delta$,
+  \begin{align*}
+    \|T(x_0) - T(y)\|_F
+    &= \|T(x_0 - y)\| =
+      \left\| \|x_0-y\| \, T \left( \frac{x_0 - y}{\|x_0 - y\|}\right) \right\| \\
+    &\leq \|x_0 - y\| \cdot C \leq \delta \cdot C = \frac{\epsilon}{C} \cdot C = \epsilon.\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{nota}
+  La condició 3 es pot reescriure com que $T$ és Lipschitz contínua.
+\end{nota}
+
+\begin{exemple}
+  Per a cada funció $\varphi : [a,b] \to [a,b]$ contínua, l'aplicació
+  \begin{align*}
+    T : \mathcal C([a,b]) &\longrightarrow \mathcal C([a,b]), \\
+    T (f) &\longmapsto f \circ \varphi, 
+  \end{align*}
+  és contínua.
+\end{exemple}
+
+\begin{proof}
+  Per a vore que $T$ és contínua, cal provar que és lineal. Observem
+  que
+  \[
+    \|T(f)\|_\infty = \sup_{x\in[a,b]} \left|(f\circ\varphi)(x)\right|
+    \leq \sup_{x\in[a,b]}|f(x)| = \|f\|_\infty.
+  \]
+  Pel cas \ref{c_cont:3} del Teorema
+  \ref{teo:caracterització_continuïtat} amb $C=1$, tenim que $T$ és
+  contínua.
+\end{proof}
+
+\begin{coro}
+  En tot espai normat $E$ de dimensió infinita existeixen formes
+  lineals que no són contínues.
+\end{coro}
+
+\begin{proof}
+  Com $E$ té dimensió infinita, existeix
+  $(l_n)_{n=1}^\infty \subset E$, vectors linealment independents amb
+  $\|l_n\| = 1$. Considerem $\mathcal{B}$ una base de $E$ amb
+  $(l_n)_{n=1}^\infty \subset \mathcal{B}$ (assumint l'axioma
+  d'elecció). Reescrivim $\mathcal{B} = \{e_i\}_{i \in I}$,
+  $\mathbb{N} \subset I$ i definim
+  \begin{equation*}
+    \begin{array}{lrcl}
+      f : & E &\longrightarrow& E, \\
+          & x = \sum\limits_{i \in I}\alpha_ie_i
+              &\longmapsto& f(x) = \sum\limits_{n=1}^{\infty} ne_n.
+    \end{array}
+  \end{equation*}
+  Així, $f(e_n) = ne_n$ i $\|f(e_n)\| = \|ne_n\| = n$. Per tant, $f$
+  no està fitada i no és contínua.
+\end{proof}
+
+\section{Espais de Banach}
+
+Recordem algunes definicions bàsiques de l'anàlisi matemàtica en el
+context d'espais normats.
+
+\begin{defi}[Successió de Cauchy]
+  Una successió $\{x_n\}_{n \in \mathbb{N}}$ en un espai vectorial
+  normat $E$ es diu que és de Cauchy si per a tot $\epsilon > 0$
+  existeix $N \in \mathbb{N}$ tal que per a tot $n, \, m \geq N$ es
+  compleix que $\|x_n - x_m\| < \epsilon$.
+\end{defi}
+
+\begin{exemple}
+  En l'espai $E = (\mathcal{C}[0,1], \|\cdot\|_\infty)$ de les
+  funcions contínues en l'interval $[0,1]$ amb la norma del suprem, la
+  successió de funcions $\{f_n\}_{n \in \mathbb{N}}$ definida per
+  $f_n(x) = \left( \frac{x}{2} \right)^n$ és de Cauchy.
+\end{exemple}
+
+\begin{defi}[Successió convergent]
+  Una successió $\{x_n\}_{n \in \mathbb{N}}$ en un espai vectorial
+  normat $E$ es diu que és convergent a un punt $x \in E$ si per a tot
+  $\epsilon > 0$ existeix un $N \in \mathbb{N}$ tal que per a tot
+  $n \geq N$ es compleix que $\|x_n - x\| < \epsilon$.
+\end{defi}
+
+Aquesta definició es pot expressar en termes de límits com
+\[
+  \lim_{n \to \infty} x_n = x \quad \iff \quad
+  \lim_{n \to \infty} \|x_n - x\| = 0 \quad \iff \quad
+  \lim_{n \to \infty} d(x_n, x) = 0.
+\]
+
+\begin{defi}[Convergència de sèries]
+  Una sèrie $\sum_{n=1}^{\infty} x_n$ en un espai vectorial normat $E$
+  es diu que és convergent a un punt $x \in E$ si la successió de
+  sumes parcials $\{s_n\}_{n \in \mathbb{N}}$ definida per
+  $s_n = \sum_{k=1}^{n} x_k$ és convergent a $x$, és a dir, si
+  \[
+    \lim_{n \to \infty} \Big\| \, x - \sum_{k=1}^{n} x_k \, \Big\| = 0.
+  \]
+\end{defi}
+
+\begin{defi}[Espai de Banach]
+  Un espai normat $E$ es diu que és un espai de Banach si és complet
+  respecte a la norma $\|\cdot\|$, és a dir, si tota successió de
+  Cauchy en $E$ convergeix a un punt en $E$.
+\end{defi}
+
+\begin{exemple}
+  \begin{itemize}
+  \item Un exemple d'espai normat que és un espai de Banach són els
+    nombres reals $\mathbb{R}$ amb la norma definida pel valor absolut.
+  \item Un exemple d'espai normat que no és un espai de Banach és
+    l'espai de les successions de suport finit amb la norma suprem. És
+    a dir, el conjunt
+    \[
+      c_{00} = \left\{ x = (x_1, x_2, \dotsc) : \exists\, N \in \mathbb{N}
+        \;\; \text{tal que} \;\; x_n = 0, \;\; \forall\, n > N \right\}
+    \]
+    amb la norma
+    \[
+      \|x\|_\infty = \sup_{i \in \mathbb{N}} |x_i|
+    \]
+    no és un espai de Banach.
+  \end{itemize}
+\end{exemple}
+
+Altres exemples d'espais de Banach són els espais de funcions
+contínues i els espais de funcions integrables.
+
+\begin{exemple}
+  Siga $K$ un espai topològic compacte, denotem per
+  $(\mathcal{C}(K), \|\cdot\|_\infty)$ a l'espai de les funcions
+  contínues en $K$ amb la norma $\|f\| = \sup_{x \in K}
+  |f(x)|$. Aquest espai és un espai de Banach.
+\end{exemple}
+
+Sabem que tota sèrie de nombres reals o complexos que és absolutament
+convergent és convergent. Vegem que aquest resultat també es vàlid per
+a espais de Banach.
+
+\begin{teorema}
+  Siga $(E, \|\cdot\|)$ un espai normat. Aleshores, les següents
+  afirmacions són equivalents.
+  \begin{enumerate}[(i), nosep]
+  \item $(E, \|\cdot\|)$ és un espai de Banach.
+  \item Si $(x_n)_n \subset E$ amb
+    $\sum_{n=1}^{\infty} \|x_n\| < \infty$, aleshores la sèrie
+    $\sum_{n=1}^{\infty} x_n$ és convergent en $E$.
+  \end{enumerate}
+\end{teorema}
+
+\section{Espais normats de dimensió finita}
+
+El nostre següent objectiu és definir una família de normes en
+$\mathbb{R}^n$ (o $\mathbb{C}^n$) que generalitzen la norma
+euclidiana. Per a això, considerem la norma $\|x\|_p$ definida per
+\[
+  \|x\|_p = \Big( \sum_{i=1}^{n} |x_i|^p \Big)^{\frac{1}{p}},
+  \quad x = (x_1, x_2, \dotsc, x_n) \in \mathbb{R}^n.
+\]
+Per a poder demostrar que $\|\cdot\|_p$ és una norma, necessitem
+demostrar que satisfà les propietats de positivitat, homogeneïtat i
+desigualtat triangular. La positivitat i l'homogeneïtat són propietats
+immediates de la definició de $\|\cdot\|_p$, per la qual cosa ens
+enfocarem a demostrar la desigualtat triangular. Per poder demostrar
+la desigualtat triangular, necessitem fer ús de les següents tres
+desigualtats fonamentals: la desigualtat de Young, la desigualtat de
+Hölder i la desigualtat de Minkowski.
+
+Recordem que una funció $f : \mathbb{R} \to \mathbb{R}$ és convexa si
+per a tot $x, \, y \in \mathbb{R}$ i per a tot $\lambda \in [0,1]$ es
+compleix que
+\[
+  f(\lambda x + (1-\lambda) y) \leq \lambda f(x) + (1-\lambda) f(y).
+\]
+Gràficament, una funció és convexa si la seua gràfica es troba per
+davall de la recta que uneix dos punts qualssevol de la gràfica.
+
+\begin{defi}[Exponent conjugat]
+  L'exponent conjugat d'un nombre $p \in (1, +\infty)$ es defineix com
+  el nombre $q \in (1, +\infty)$ tal que
+  \[
+    \frac{1}{p} + \frac{1}{q} = 1.
+  \]
+  En el cas que $p = 1$ o $p = +\infty$, es defineix $q = +\infty$ o
+  $q = 1$, respectivament.
+\end{defi}
+
+\begin{exemple}
+  \begin{itemize}[nosep]
+  \item Si $p=3$, aleshores $q = \frac{3}{2}$.
+  \item Si $p = \sqrt{2}$, aleshores $q = 2 + \sqrt{2}$.
+  \item Si $p = 2$, aleshores $q = 2$.
+  \end{itemize}
+\end{exemple}
+
+Entre les propietats que es poden deduir de l'exponent conjugat, tenim
+la següent.
+
+\begin{prop}
+  Si $p,\, q > 1$ són tals que $q$ és l'exponent conjugat de $p$,
+  aleshores $pq = p + q$.
+\end{prop}
+
+\begin{teorema}[Desigualtat de Young]
+  Siguen $a,\, b \in \mathbb{R}$ i $p,\, q > 1$ tals que $q$ és
+  l'exponent conjugat de $p$, és a dir
+  $\frac{1}{p} + \frac{1}{q} = 1$, aleshores
+  \[
+    ab \leq \frac{a^p}{p} + \frac{b^q}{q}.
+  \]
+\end{teorema}
+
+La desigualtat té la següent interpretació geomètrica. Si considerem
+les funcions
+\[
+  \phi(t) = t^{p-1}, \quad \psi(t) = t^{q-1},
+\]
+aleshores $\phi(t)$ i $\psi(t)$ són funcions tals que una és la
+inversa de l'altra. És a dir, si $\phi(t) = a$, aleshores
+$\psi(a) = t$ i viceversa. La desigualtat de Young ens diu que l'àrea
+del rectangle de costats $a$ i $b$ és menor o igual a la suma de les
+àrees sota les corbes $\phi(t)$ i $\psi(t)$.
+
+La desigualtat de Hölder és una conseqüència de la desigualtat de
+Young que ens permet fitar el producte de dues funcions en termes de
+les seues normes.
+
+\begin{teorema}[Desigualtat de Hölder]
+  Siguen $p,\, q > 1$ tals que $\frac{1}{p} + \frac{1}{q} = 1$, i
+  siguen $x_i,\, y_i \in \mathbb{R}$ per a $i = 1, 2, \dotsc, n$
+  nombres reals no negatius, aleshores
+  \[
+    \sum_{i=1}^{n} x_i y_i \leq
+    \Big( \sum_{i=1}^{n} x_i^p \Big)^{\frac{1}{p}}
+    \Big( \sum_{i=1}^{n} y_i^q \Big)^{\frac{1}{q}}.
+  \]
+\end{teorema}
+
+Notem que en la desigualtat anterior podem considerar
+$x_i, \, y_i \in \mathbb{C}$ per a $i = 1, 2, \dotsc, n$, i la
+desigualtat continua sent vàlida.
+
+La desigualtat de Minkowski ens permet fitar la norma de la suma de
+dos vectors en $\mathbb{R}^n$.
+
+\begin{teorema}[Desigualtat de Minkowski]
+  Siguen $p > 1$ i $x,\, y \in \mathbb{R}^n$, aleshores
+  \[
+    \Big( \sum_{i=1}^{n} |x_i + y_i|^p \Big)^{\frac{1}{p}} \leq
+    \Big( \sum_{i=1}^{n} |x_i|^p \Big)^{\frac{1}{p}} +
+    \Big( \sum_{i=1}^{n} |y_i|^p \Big)^{\frac{1}{p}}.
+  \]
+\end{teorema}
+
+Ara que hem demostrat les desigualtats de Hölder i Minkowski, podem
+demostrar que l'espai $\mathbb{K}^n$ és un espai normat amb
+$\|\cdot\|_p$.
+
+\begin{teorema}
+  Per a tot nombre $1 \leq p < + \infty$, l'espai $\mathbb{K}^n$ és un
+  espai normat amb la norma
+  \[
+    \|x\|_p = \Big( \sum_{i=1}^{n} |x_i|^p \Big)^{\frac{1}{p}}.
+  \]
+\end{teorema}
+
+\begin{itemize}
+\item Per a $p = 2$ obtenim l'espai euclidià $\mathbb{R}^n$ amb la
+  norma euclidiana $\|x\|_2 = \sqrt{x_1^2 + x_2^2 + \dotsb + x_n^2}$.
+\item Per a $p = 1$ obtenim l'espai de les sumes absolutes
+  $\|x\|_1 = |x_1| + |x_2| + \dotsb + |x_n|$.
+\item Per a $p = \infty$, la norma
+  $\|x\|_\infty = \max_{i=1,\dotsc,n}|x_i|$ és la norma del màxim i
+  l'espai $\ell^\infty(\mathbb{R}^n)$ és també un espai normat.
+\end{itemize}
+
+\begin{defi}[Normes equivalents]
+  Dues normes $\|\cdot\|_1$ i $\|\cdot\|_2$ en un espai vectorial $E$
+  es diuen equivalents si exisiteixen constants $C_1,\, C_2 > 0$ tals
+  que
+  \[
+    C_1 \|x\|_1 \leq \|x\|_2 \leq C_2 \|x\|_1, \quad \forall\, x \in E.
+  \]
+\end{defi}
+
+\begin{teorema}[Equivalència de normes en $\mathbb{K}^n$]
+  Siga $n \in \mathbb{N}$, aleshores totes les normes en
+  $\mathbb{K}^n$ són equivalents.
+\end{teorema}
+
+És important remarcar el següent resultat que no demostrarem en aquest
+curs. La demostració d'aquest resultat s'estudia al curs d'Anàlisi
+Funcional.
+
+\begin{teorema}[Compacitat de la bola unitat]
+  Siga $E$ un espai normat. Aleshores, les següents afirmacions són
+  equivalents.
+  \begin{enumerate}[nosep]
+  \item $E$ té dimensió finita.
+  \item La bola unitat tancada d'$E$ és compacta.
+  \item Tot subconjunt d'$E$ tancat i fitat és compacte.
+  \end{enumerate}
+\end{teorema}
+
+\section{Els espais \texorpdfstring{$\ell^p$}{lp}}
+
+\begin{defi}[Espais $\ell^p$]
+  Per a $1 \leq p < \infty$, l'espai $\ell^p$ es defineix com l'espai
+  de les successions $x = (x_1, x_2, \dotsc)$ amb la $p$-norma fitada,
+  \[
+    \ell^p = \left\{ x = (x_1, x_2, \dotsc) : \Big(
+      \sum_{i=1}^{\infty} |x_i|^p \Big)^{\frac{1}{p}} < \infty
+    \right\}.
+  \]
+  Per a $p = \infty$, l'espai $\ell^\infty$ es defineix com l'espai de
+  les successions $x = (x_1, x_2, \dotsc)$ fitades amb la norma del
+  suprem,
+  \[
+    \ell^\infty = \left\{ x = (x_1, x_2, \dotsc) : \sup_{i \in
+        \mathbb{N}} |x_i| < \infty \right\}.
+  \]
+  En tots els casos, l'espai $(\ell^p, \|\cdot\|_p)$ és un espai
+  normat.
+\end{defi}
+
+\begin{teorema}
+  Per a $1 \leq p \leq \infty$, l'espai $\ell^p$ és un espai de
+  Banach.
+\end{teorema}
+
+\begin{proof}
+  Siga $1 \leq p \leq \infty$. Considerem $(X^{(n)})_{n=1}^\infty$ de
+  Cauchy. Aleshores, fixat $\epsilon > 0$, existeix $N \in \mathbb{N}$
+  tal que
+  \[
+    \|X^{(n)}-X^{(m)}\|_p < \epsilon, \quad \forall\,n,\,m > N.
+  \]
+  Per a cada $k \in \mathbb{N}$ tenim que
+  \[
+    |X_k^{(n)}-X_k^{(m)}| \leq \|X_k^{(n)}-X_k^{(m)}\|_p < \epsilon,
+    \quad \forall\,n,\ m > N.
+  \]
+  Per tant, $(X_k^{(n)})_{k=1}^\infty$ és una successió de Cauchy en
+  $\mathbb{K}$. Per tant, existeix el límit
+  \[
+    \lim_{n\to\infty} X_k^{(n)} = X_k.
+  \]
+  Definim $X = (X_1, X_2, \dotsc)$. Notem que per a tot
+  $m \in \mathbb{N}$ tenim que
+  \[
+    \sum_{k=1}^m |X_k^{(n)}-X_k^{(j)}|^p \leq
+    \sum_{k=1}^{\infty}|X_k^{(n)} - X_k^{(j)}|^p = \|X^{(n)} -
+    X^{(j)}\|_p^p < \epsilon^p \quad \text{si} \;\; n,\,j > N.
+  \]
+  Prenent límits quan $j \to \infty$,
+  \[
+    \sum_{k=1}^{m}|X_k^{(n)} - X_k^{(j)}|^p < \epsilon^p, \quad
+    \forall\,m \in \mathbb{N},\ \forall\,n > N.
+  \]
+  Per tant, apleguem a
+  \[
+    \|X^{(n)}-X\|_p^p = \sum_{k=1}^{\infty} |X_k^{(n)}-X_k|^p <
+    \epsilon^p, \quad \forall \, n > N.
+  \]
+  Per definició $X^{(n)} \to X$ en $\|\cdot\|_p$. Per últim, aplicant
+  la desigualtat triangular,
+  \[
+    \Big( \sum_{i=1}^\infty |X_i|^p \Big)^{\frac{1}{p}} \leq
+    \Big( \sum_{i=1}^\infty |X_i - X_i^{(n)}|^p \Big)^{\frac{1}{p}} +
+    \Big( \sum_{i=1}^\infty |X_i^{(n)}|^p \Big)^{\frac{1}{p}}
+    \quad \forall \, n \in \mathbb{N}.
+  \]
+  Considerant $n$ tal que $\|X-X^{(n)}\|_p < 1$, tenim que
+  $\|X\|_p \leq 1 + \|X^{(n)}\| < +\infty$. Per tant, $X \in \ell^p$.
+\end{proof}
+
+Els espais $\ell^p$ tenen una relació d'inclusió entre ells com
+segueix.
+
+\begin{teorema}
+  Per a $1 \leq p < q \leq \infty$, es compleix que
+  $\ell^p \subset l^q$.
+\end{teorema}
+
+\section{Espais de Lebesgue \texorpdfstring{$L^p(\Omega)$}{Lp}}
+
+Siga $\Omega$ un conjunt mesurable i $\mu$ una mesura en $\Omega$. Per
+a $1 \leq p < \infty$, l'espai $\mathcal{L}^p(\Omega)$ es defineix com
+l'espai de les funcions mesurables $f : \Omega \to \mathbb{R}$ tals
+que
+\[
+  \|f\|_p = \left( \int_\Omega |f(x)|^p \, \mathrm{d}\mu(x)
+  \right)^{\frac{1}{p}} < \infty,
+\]
+és a dir,
+\[
+  \mathcal{L}^p(\Omega) = \left\{ f : \Omega \to \mathbb{R}\ :\ \left(
+      \int_\Omega |f(x)|^p \, \mathrm{d}\mu(x) \right)^{\frac{1}{p}} <
+    \infty \right\}.
+\]
+És evident que $\mathcal{L}^p(\Omega)$ amb la funció $\|\cdot\|_p$
+verifica la propietat d'homogeneïtat de la definició de norma per la
+linealitat de la integral. Per a veure que $\|\cdot\|_p$ verifica la
+desigualtat triangular, necessitem la versió de les desigualtats de
+Hölder i Minkowski per a integrals.
+
+\begin{teorema}[Desigualtat de Hölder per a integrals]
+  Siguen $p,\,q>1$ tals que $\frac{1}{p} + \frac{1}{q} = 1$, i siguen
+  $f \in \mathcal{L}^p(\Omega)$ i $g \in \mathcal{L}^q(\Omega)$,
+  aleshores $fg \in \mathcal{L}^1(\Omega)$ i
+  \[
+    \left| \int_\Omega f(x)g(x)\, \mathrm{d}x \right| \leq
+    \int_\Omega |f(x)g(x)|\,\mathrm{d}x \leq
+    \left(\int_\Omega |f(x)|^p\,\mathrm{d}x\right)^{\frac{1}{p}}
+    \left(\int_\Omega |g(x)|^q\,\mathrm{d}x\right)^{\frac{1}{q}}.
+  \]
+\end{teorema}
+
+\begin{proof}
+  Suposem $\|f\|_p, \, \|g\|_q \neq 0$. Que el mòdul de la integral és
+  major o igual que la integral del mòdul es té per les propietats de
+  la integral de Lebesgue. Per tant, sols hem de demostrar la segona
+  desigualtat. Per a cada $X \in \Omega$, per la desigualtat de Young,
+  \[
+    \frac{|f(x)|}{\|f\|_p} \cdot \frac{|g(x)|}{\|g\|_q} \leq
+    \frac{\left( \frac{|f(x)|}{\|f\|_p} \right)^p}{p} +
+    \frac{\left( \frac{|g(x)|}{\|g\|_q} \right)^q}{q} =
+    \frac{|f(x)|^p}{p\|f\|_p^p} + \frac{|g(x)|^q}{q\|g\|_q^q}.
+  \]
+  Per tant,
+  \begin{align*}
+    \int_\Omega \frac{|f(x)|}{\|f\|_p} \cdot \frac{|g(x)|}{\|g\|_q}
+    \,\mathrm{d}x
+    &\leq \int_\Omega \frac{|f(x)|^p}{p\|f\|_p^p} +
+      \frac{|g(x)|^q}{q\|g\|_q^q} \,\mathrm{d}x \\
+    &=\frac{1}{p} \cdot
+      \underbrace{\frac{\int_\Omega|f(x)|^p\,\mathrm{d}x}{\|f\|_p^p}}_1 +
+      \frac{1}{q} \cdot
+      \underbrace{\frac{\int_\Omega|g(x)|^q\,\mathrm{d}x}{\|g\|_q^q}}_1
+      = \frac{1}{p} + \frac{1}{q} = 1.
+  \end{align*}
+  Així, tenim que $fg \in \mathcal{L}^1(\Omega)$ i 
+  \(
+    \int_\Omega |f(x)g(x)| \, \mathrm{d}x \leq \|f\|_p \cdot \|g\|_q.
+  \)
+\end{proof}
+
+\begin{teorema}[Desigualtat de Minkowski per a integrals]
+  Siguen $p \geq 1$ i $f,\,g : \Omega \to \mathbb{R}$ són funcions en
+  $\mathcal{L}^p(\Omega)$, aleshores $f+g \in \mathcal{L}^p(\Omega)$ i
+  \[
+    \|f + g\|_p \leq \|f\|_p + \|g\|_p.
+  \]
+\end{teorema}
+
+\begin{proof}
+  Per a $p=1$ el resultat és directe. Suposem que $p > 1$ i vegem que
+  $f + g \in L^p(\Omega)$. Per a vore aquesta part, notem que per a
+  tot $x \in \Omega$,
+  \[
+    |f(x) + g(x)|^p \leq 2^p \max\{|f(x)|^p,\,|g(x)|^p\}
+    \leq 2^p (|f(x)|^p + |g(x)|^p).
+  \]
+  Per tant,
+  \begin{align*}
+    \int_\Omega |f(x) + g(x)|^p\,\mathrm{d}x
+    &\leq 2^p \left( \int_\Omega |f(x)|^p \, \mathrm{d}x +
+      \int_\Omega |g(x)|^p \, \mathrm{d}x \right) \\
+    &= 2^p \big( \|f\|_p^p + \|g\|_p^p \big) < + \infty.
+  \end{align*}
+  Aleshores, $f + g \in L^p(\Omega)$. Queda comprovar que
+  $\|f + g\|_p \leq \|f\|_p + \|g\|_p$. Observem que
+  \begin{align*}
+    \|f+g\|_p^p
+    &= \int_\Omega |f(x) + g(x)|^p \, \mathrm{d}x \\
+    &= \int_\Omega \textcolor{teal}{|f(x) + g(x)|^{p-1}}
+      \textcolor{violet}{f(x)} \, \mathrm{d}x +
+      \int_\Omega \textcolor{teal}{|f(x) + g(x)|^{p-1}}
+      \textcolor{violet}{g(x)} \, \mathrm{d}x \\
+    &\overset{\mathclap{\text{Hölder}}}{\leq}\;\;\,
+      \textcolor{violet}{\|f\|_p}
+      \textcolor{teal}{\|(f+g)^{p-1}\|_q} +
+      \textcolor{violet}{\|g\|_p}
+      \textcolor{teal}{\|(f+g)^{p-1}\|_q} \\
+    &= \textcolor{violet}{\|f\|_p}
+      \textcolor{teal}{\|f+g\|_p^{p-1}} +
+      \textcolor{violet}{\|g\|_p}
+      \textcolor{teal}{\|f+g\|_p^{p-1}}
+  \end{align*}
+  i concloem que $\|f+g\|_p \leq \|f\|_p + \|g\|_p$.
+\end{proof}
+
+Per tant, el conjunt $\mathcal{L}^p(\Omega)$ amb la funció
+$\|\cdot\|_p$ verifica les propietats d'homogeneïtat i desigualtat
+triangular, de la definició d'espai normat. No obstant això, encara
+que $\|f\| \geq 0$ per a tota funció $f \in \mathcal{L}^p(\Omega)$, no
+es verifica la propietat de positivitat, ja que la norma $\|f\|_p$ pot
+ser zero encara que la funció $f$ no siga la funció nu\l.la.
+
+Per a aconseguir que es verifique aquesta propietat, podem realitzar
+una relació d'equivalència en $\mathcal{L}^p(\Omega)$ on dues funcions
+$f, \, g \in \mathcal{L}^p(\Omega)$ són equivalents si $f = g$ quasi
+per totes parts, és a dir, si $f(x) = g(x)$ per a tot $x \in \Omega$
+excepte en un conjunt de mesura zero.
+
+L'espai quocient $\mathcal{L}^p(\Omega)/\sim$ amb la norma
+$\|\cdot\|_p$ és l'espai de Lebesgue $L^p(\Omega)$.
+
+\begin{defi}[Espais de Lebesgue $L^p(\Omega)$]
+  Per a $1 \leq p < \infty$, l'espai de Lebesgue $L^p(\Omega)$ es
+  defineix com l'espai quocient $\mathcal{L}^p(\Omega) / \sim$, amb la
+  norma
+  \[
+    \|f\|_p = \left( \int_\Omega |f(x)|^p \, \mathrm{d}\mu(x)
+    \right)^{\frac{1}{p}}.
+  \]
+  En tots els casos, l'espai $(L^p(\Omega), \|\cdot\|_p)$ és un espai
+  de Banach.
+\end{defi}
+
+\begin{exemple}
+  Un exemple d'espai de Lebesgue és l'espai $L^2([a,b])$ de les
+  funcions quadrat integrables en l'interval $[a,b]$ amb la norma
+  \[
+    \|f\|_2 = \left( \int_a^b |f(x)|^2 \, \mathrm{d}x \right)^{\frac{1}{2}}.
+  \]
+  Notem qu en els espas $L^p(\Omega)$ la convergència en la norma
+  $\|\cdot\|_p$ no implica la convergència puntual de la successió de
+  funcions.
+\end{exemple}
+
+\begin{exemple}
+  Considerem la successió de funcions $(f_n)_n \subset L^p([0,1])$
+  definida com
+  \begin{align*}
+    &f_1 = \chi_{\left[0,\frac{1}{2}\right]}, &
+    &f_2 = \chi_{\left[\frac{1}{2},1\right]}, &
+    &f_3 = \chi_{\left[0,\frac{1}{3}\right]}, &
+    &f_4 = \chi_{\left[\frac{1}{2},\frac{1}{4}\right]}, &
+    &\dotsc
+  \end{align*}
+  Aleshores, tenim que $\lim_{n \to \infty} \|f_n\|_p = 0$ però per a
+  tot punt $x \in [0,1]$ la successió $(f_n(x))_n$ pren els valors $0$
+  i $1$ infinites vegades, per la qual cosa aquesta successió
+  $(f_n(x))_n$ no convergeix a cap punt $x \in [0,1]$.
+\end{exemple}
+
+\begin{defi}[Límit inferior]
+  Siga $(x_n)_n$ una successió de nombres reals, aleshores el límit
+  inferior de la successió $(x_n)_n$ es defineix com
+  \[
+    \liminf_{n \to \infty} x_n = \lim_{n \to \infty} \inf_{k \geq n} x_n.
+  \]
+\end{defi}
+
+\begin{teorema}[Lema de Fatou]
+  Siga $(f_n)_n$ una successió de funcions mesurables i positives en
+  $L^p(\Omega)$, aleshores
+  \[
+    \int_{\Omega} \liminf_{n \to \infty} f_n(x) \, \mathrm{d}x \leq
+    \liminf_{n \to \infty} \int_{\Omega} f_n(x) \, \mathrm{d}x.
+  \]
+\end{teorema}
+
+\begin{teorema}[$L^p(\Omega)$ és un espai de Banach]
+  Per a $1 \leq p < \infty$, l'espai de Lebesgue $L^p(\Omega)$ és un
+  espai de Banach.
+\end{teorema}
+
+\begin{coro}
+  Per a $1 \leq p < \infty$, si $f_n \to f$ en $L^p(\Omega)$,
+  aleshores existeix una subsuccessió $(f_{n_k})_k$ de $(f_n)_n$ tal
+  que $f_{n_k} \to f$ quasi per totes parts en $\Omega$.
+\end{coro}
+
+\begin{teorema}
+  Per a $1 \leq p < q < \infty$, es compleix que
+  $L^q(\Omega) \subset L^p(\Omega)$ amb inclusió contínua. És a dir,
+  la convergència d'una successió en $L^q(\Omega)$ implica la
+  convergència d'aquesta en $L^p(\Omega)$.
+\end{teorema}
+
+\section{Operadors entre espais normats}
+
+\begin{defi}[Norma d'un operador fitat]
+  Siguen $E$ i $F$ dos espais normats i $T : E \to F$ una aplicació
+  lineal de $E$ en $F$. Diem que $T$ és un operador fitat si existeix
+  una constant $C > 0$ tal que per a tot $x \in E$ es compleix que
+  \[
+    \|T(x)\|_F \leq C, \quad \forall\, x \in E, \;\; \|x\|_E \leq 1.
+  \]
+  La norma d'un operador fitat $T$ es defineix com
+  \[
+    \|T\| = \sup_{\|x\|_E \leq 1} \|T(x)\|_F.
+  \]
+\end{defi}
+
+\begin{nota}
+  La norma de l'operador $T$ és la menor constant $C > 0$ que verifica
+  la desigualtat anterior, és a dir,
+  \begin{align*}
+    \|T\| &= \inf\{C > 0 : \|T(x)\|_F \leq C, \;\; \forall\, x \in E, \;\; \|x\|_E \leq 1\} \\
+          &= \inf\{C > 0 : \|T(x)\|_F \leq C \|x\|_E, \;\; \forall\, x \in E\}.
+  \end{align*}
+  on la segon igualtat se segueix de l'homogeneïtat de la norma i la
+  linealitat de $T$.
+\end{nota}
+
+\begin{exemple}
+  Fixat $a \in \mathbb{R}^n$ i $1 \leq p \leq +\infty$, considerem
+  l'aplicació lineal
+  \begin{equation*}
+    \begin{array}{lrcl}
+      \varphi : & (\mathbb{R}^n, \|\cdot\|_p) &\longrightarrow& \mathbb{R} \\
+      & x &\longmapsto& \langle a, x \rangle = \sum\limits_{i=1}^{n}a_ix_i.
+    \end{array}
+  \end{equation*}
+  Aleshores, si $q$ és el conjugat de $p$, la norma de $\varphi$ és
+  $\|\varphi\| = \|a\|_q$.
+\end{exemple}
+
+\begin{exemple}
+  L'operador
+  \[
+    \begin{array}{lrcl}
+      T : & (\mathcal{C}[0,1], \|\cdot\|_\infty) &\longrightarrow& (\mathcal{C}[0,1], \|\cdot\|_\infty), \\
+      & f &\longmapsto& T(f) = \int_0^x f(t)\, \mathrm{d}t, \quad x \in [0,1],
+    \end{array}
+  \]
+  és un operador lineal de norma $1$.
+\end{exemple}
+
+\begin{defi}[L'espai dels operadors fitats]
+  Donats dos espais normats $E$ i $F$, denotem per
+  $(L(E,F), \|\cdot\|)$ al conjunt dels operadors fitats d'$E$ en $F$
+  amb la norma dels operadors fitats. Aquest conjunt és un espai
+  vectorial sobre el cos $\mathbb{K}$ amb les operacions de suma i
+  producte per escalars definides de la següent manera,
+  \begin{align*}
+    (T_1 + T_2)(x) &= T_1(x) + T_2(x), \\
+    (\lambda T)(x) &= \lambda T(x),
+  \end{align*}
+  per a tot $T_1,\, T_2 \in L(E, F, \|\cdot\|)$,
+  $\lambda \in \mathbb{K}$ i $x \in E$.
+\end{defi}
+
+\begin{teorema}
+  L'espai $(L(E,F), \|\cdot\|)$ és un espai vectorial normat amb la
+  norma dels operadors fitats. A més, si $E$, $F$ i $G$ són espais
+  normats i $T \in (L(E,F), \|\cdot\|)$ i $S \in (L(F,G), \|\cdot\|)$,
+  aleshores $S \circ T \in (L(E,G), \|\cdot\|)$ i
+  $\|S \circ T\| \leq \|S\| \|T\|$.
+\end{teorema}
+
+\begin{teorema}
+  Si $F$ és un espai de Banach, aleshores l'espai
+  $(L(E,F), \|\cdot\|)$ és un espai de Banach.
+\end{teorema}
+
+\begin{defi}[Espai dual]
+  Donat un espai normat $E$, l'espai dual de $E$, denotat per $E^*$,
+  és l'espai dels funcionals lineals i continus de $E$ en
+  $\mathbb{K}$.
+\end{defi}
+
+\begin{coro}
+  Si $E$ és un espai de Banach, aleshores $E^*$ és un espai de Banach.
+\end{coro}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
