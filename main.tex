@@ -2,17 +2,27 @@
 
 \usepackage{mathtools, amssymb, amsthm}
 \usepackage[catalan]{babel}
-\usepackage[papersize={156mm,234mm}, margin=0.7cm, includeheadfoot]{geometry}
+\usepackage[papersize={150mm,200mm}, margin=0.5cm, includeheadfoot]{geometry}
 \usepackage{graphicx}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage[vvarbb, helvratio=.87, nott]{newtx}
 \usepackage[bf, sf]{titlesec}
 \usepackage[shortlabels]{enumitem}
-\RequirePackage[colorlinks]{hyperref}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
 
 \author{Quim Pascual Egea}
 \title{Anàlisi Matemàtica III}
 \date{2025}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=Violet}
+
+\pgfplotsset{width=5cm,compat=1.9}
+\usepgfplotslibrary{external}
+\tikzexternalize
 
 \def\data#1{\noindent\textcolor{blue}{\sffamily #1}}
 \renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textsf{\itshape #1}}
@@ -27,7 +37,6 @@
 \newtheoremstyle{exemple}{}{}{\sffamily}{}{\bfseries\sffamily\color{green!40!black}}{.}{.5em}{}
 \theoremstyle{exemple}
 \newtheorem{exemple}[teorema]{Exemple}
-\RequirePackage[colorlinks]{hyperref}
 
 \begin{document}
 
@@ -155,6 +164,35 @@ Per tant, la bola oberta de radi $r$ centrada en l'origen és un
 conjunt fonamental en la topologia d'un espai vectorial normat que
 conté tota la informació topològica de l'espai.
 
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \draw[thick,->] (-1.5,0) -- (1.5,0);
+    \draw[thick,->] (0,-1.5) -- (0,1.5);
+    \fill[orange!30, fill opacity=0.5] (1,0) -- (0,1) -- (-1,0) -- (0,-1) -- cycle;
+    \draw[orange, thick] (1,0) -- (0,1) -- (-1,0) -- (0,-1) -- cycle;
+    \node at (-1.2,1.4) {$\|\cdot\|_1$};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}
+    \draw[thick,->] (-1.5,0) -- (1.5,0);
+    \draw[thick,->] (0,-1.5) -- (0,1.5);
+    \fill[orange!30, fill opacity=0.5] (0,0) circle(1);
+    \draw[orange, thick] (0,0) circle(1);
+    \node at (-1.2,1.4) {$\|\cdot\|_2$};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}
+    \draw[thick,->] (-1.5,0) -- (1.5,0);
+    \draw[thick,->] (0,-1.5) -- (0,1.5);
+    \fill[orange!30, fill opacity=0.5] (-1,1) rectangle (1,-1);
+    \draw[orange, thick] (-1,1) rectangle (1,-1);
+    \node at (-1.2,1.4) {$\|\cdot\|_\infty$};
+  \end{tikzpicture}
+  \caption{$B(0,1)$ en diferents normes.}
+  \label{fig:bola-normes}
+\end{figure}
+
 \begin{prop}[Propietats addicionals de la norma]
   Siga $E$ un espai vectorial normat i siguen $x, \, y \in E$,
   aleshores tenim les següents propietats.
@@ -233,11 +271,12 @@ operacions de suma de vectors i producte per escalars.
 \end{teorema}
 
 \begin{proof}
-  La implicació $(\ref{c_cont:1}) \to (\ref{c_cont:2})$ és
-  directa. Per a $(\ref{c_cont:2}) \to (\ref{c_cont:3})$ observem que
-  $T$ és contínua en $0$ i és lineal. Per tant, $T(0) = 0$ i existeix
-  $r > 0$ tal que $B_E(0,r) \subset T^{-1}(B_F(0,1))$. Per tant, per a
-  tot $x \in B_E(0,r)$ tenim que $T(x) \in B_F(0,1)$. Així,
+  La implicació $(\ref{c_cont:1} \Rightarrow \ref{c_cont:2})$ és
+  directa. Per a $(\ref{c_cont:2} \Rightarrow \ref{c_cont:3})$
+  observem que $T$ és contínua en $0$ i és lineal. Per tant,
+  $T(0) = 0$ i existeix $r > 0$ tal que
+  $B_E(0,r) \subset T^{-1}(B_F(0,1))$. Per tant, per a tot
+  $x \in B_E(0,r)$ tenim que $T(x) \in B_F(0,1)$. Així,
   $\|T(x)\|_F \leq 1$, però
   \[
     \|T(x)\|_F = \frac{\|x\|_E}{r} \underbrace{\left\| \,
@@ -245,10 +284,10 @@ operacions de suma de vectors i producte per escalars.
     \frac{\|x\|_E}{r}.
   \]
   Així, considerant $C = \frac{1}{r}$ tenim el que volíem demostrar.
-  $(\ref{c_cont:3}) \to (\ref{c_cont:4}) \to (\ref{c_cont:5})$ és
-  directe i sols queda demostrar
-  $(\ref{c_cont:5}) \to (\ref{c_cont:1})$. Que $T(B_E)$ siga fitat
-  implica que existeix $C > 0$ amb $\|T(x)\| \leq C$ per a tot
+  $(\ref{c_cont:3} \Rightarrow \ref{c_cont:4} \Rightarrow
+  \ref{c_cont:5})$ és directe i sols queda demostrar
+  $(\ref{c_cont:5} \Rightarrow \ref{c_cont:1})$. Que $T(B_E)$ siga
+  fitat implica que existeix $C > 0$ amb $\|T(x)\| \leq C$ per a tot
   $x \in B_E$. Fixat $x_0 \in E$ i donat $\epsilon > 0$, considerem
   $\delta = \frac{\epsilon}{C}$. Aleshores si $y \in E$ amb
   $\|x_0 - y\| < \delta$,
@@ -463,6 +502,18 @@ la següent.
   \]
 \end{teorema}
 
+\begin{proof}
+  Per a provar aquest resultat gastarem la convexitat de la funció
+  exponencial. Així,
+  \begin{align*}
+    ab &= e^{\ln(ab)} = e^{\ln(a) + \ln(b)}
+         = e^{p \frac{\ln(a)}{p} + q \frac{\ln(b)}{q}}
+         = e^{\frac{\ln(a^p)}{p}+\frac{\ln(b^q)}{q}} \\
+       &\leq \frac{1}{p} e^{\ln(a^p)} + \frac{1}{q} e^{\ln(b^q)}
+         = \frac{a^p}{p} + \frac{b^q}{q}.\qedhere
+  \end{align*}
+\end{proof}
+
 La desigualtat té la següent interpretació geomètrica. Si considerem
 les funcions
 \[
@@ -473,6 +524,28 @@ inversa de l'altra. És a dir, si $\phi(t) = a$, aleshores
 $\psi(a) = t$ i viceversa. La desigualtat de Young ens diu que l'àrea
 del rectangle de costats $a$ i $b$ és menor o igual a la suma de les
 àrees sota les corbes $\phi(t)$ i $\psi(t)$.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \def\a{2.25}
+    \def\b{2}
+    \def\c{4}
+    \def\p{1.5}
+    
+    \draw[->] (-0.5,0) -- (5,0);
+    \draw[->] (0,-0.5) -- (0,2.75);
+    
+    \fill[orange!30] plot[domain=0:\c, samples=100] (\x,{\x^(\p-1)}) -- (0,\b) -- cycle;
+    \fill[green!20] plot[domain=0:\a, samples=100] (\x,{\x^(\p-1)}) -- (\a,0) -- cycle;
+    
+    \draw[red,dashed,thick] (0,\b) rectangle (\a,0);
+    \draw[blue,thick,domain=0:4.5,samples=100] plot(\x,{\x^(\p-1)}) node[right,blue] {\footnotesize $y=\phi(x)$};
+    \node[left] at (0,\b) {\textit{b}};
+    \node[below] at (\a,0) {\textit{a}};
+  \end{tikzpicture}
+  \caption{Interpretació geomètrica de la desigualtat de Young.}
+\end{figure}
 
 La desigualtat de Hölder és una conseqüència de la desigualtat de
 Young que ens permet fitar el producte de dues funcions en termes de
@@ -608,7 +681,7 @@ Funcional.
   Prenent límits quan $j \to \infty$,
   \[
     \sum_{k=1}^{m}|X_k^{(n)} - X_k^{(j)}|^p < \epsilon^p, \quad
-    \forall\,m \in \mathbb{N},\ \forall\,n > N.
+    \forall\,m \in \mathbb{N},\;\; \forall\,n > N.
   \]
   Per tant, apleguem a
   \[
@@ -777,7 +850,7 @@ $\|\cdot\|_p$ és l'espai de Lebesgue $L^p(\Omega)$.
   \[
     \|f\|_2 = \left( \int_a^b |f(x)|^2 \, \mathrm{d}x \right)^{\frac{1}{2}}.
   \]
-  Notem qu en els espas $L^p(\Omega)$ la convergència en la norma
+  Notem que en els espais $L^p(\Omega)$ la convergència en la norma
   $\|\cdot\|_p$ no implica la convergència puntual de la successió de
   funcions.
 \end{exemple}
