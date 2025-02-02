@@ -275,7 +275,7 @@ operacions de suma de vectors i producte per escalars.
   $x \in B_E(0,r)$ tenim que $T(x) \in B_F(0,1)$. Així,
   $\|T(x)\|_F \leq 1$, però
   \[
-    \|T(x)\|_F = \frac{\|x\|_E}{r} \underbrace{\left\| \,
+    \|T(x)\|_F = \frac{\|x\|_E}{r} \underbracket{\left\| \,
         T\left(\frac{rx}{\|x\|_E}\right) \, \right\|_F}_{\leq 1} \leq
     \frac{\|x\|_E}{r}.
   \]
@@ -336,7 +336,7 @@ operacions de suma de vectors i producte per escalars.
     \begin{array}{lrcl}
       f : & E &\longrightarrow& E, \\
           & x = \sum\limits_{i \in I}\alpha_ie_i
-              &\longmapsto& f(x) = \sum\limits_{n=1}^{\infty} ne_n.
+              &\longmapsto& f(x) = \sum\limits_{n=1}^{\infty} n\alpha_ne_n.
     \end{array}
   \end{equation*}
   Així, $f(e_n) = ne_n$ i $\|f(e_n)\| = \|ne_n\| = n$. Per tant, $f$
@@ -429,12 +429,58 @@ a espais de Banach.
   Siga $(E, \|\cdot\|)$ un espai normat. Aleshores, les següents
   afirmacions són equivalents.
   \begin{enumerate}[(i), nosep]
-  \item $(E, \|\cdot\|)$ és un espai de Banach.
-  \item Si $(x_n)_n \subset E$ amb
+  \item\label{item:E-banach} $(E, \|\cdot\|)$ és un espai de Banach.
+  \item\label{item:sèrie-convergent} Si $(x_n)_n \subset E$ amb
     $\sum_{n=1}^{\infty} \|x_n\| < \infty$, aleshores la sèrie
     $\sum_{n=1}^{\infty} x_n$ és convergent en $E$.
   \end{enumerate}
 \end{teorema}
+
+\begin{proof}
+  $(\ref{item:E-banach} \Rightarrow \ref{item:sèrie-convergent})$. Si
+  $s_n = \sum_{i=1}^{n} x_i$ amb $\sum_{n=1}^{\infty}\|x_n\| < \infty$
+  tenim que $(s_n)_{n=1}^\infty$ és de Cauchy ja que, si $m > n$,
+  \[
+    \|s_n - s_m\| = \Big\| \sum_{j=n+1}^{m} x_j \, \Big\|
+    \leq \sum_{j=n+1}^{m} \|x_j\|.
+  \]
+  Per ser $E$ espai de Banach tenim que $(s_n)_n$ és convergent i, per
+  tant, $\sum_{n=1}^{\infty} x_n$ convergeix.
+
+  $(\ref{item:sèrie-convergent} \Rightarrow
+  \ref{item:E-banach})$. Considerem $(x_n)_n$ successió de Cauchy. Per
+  ser de Cauchy, existeix $(n_k)_{k=1}^\infty \subseteq \mathbb{N}$
+  amb $n_1 < n_2 < \dotsb < n_k < \dotsb$ tal que
+  \[
+    \|x_p - x_q\| \leq 2^{-k}, \quad \text{si} \;\; p,\, q \geq n_k.
+  \]
+  En particular, $\|x_{n_{k+1}} - x_{n_k}\| < 2^{-k}$ per a tot
+  $k \in \mathbb{N}$. Definim $y_k = x_{n_k} - x_{n_{k-1}}$ si
+  $k \geq 2$ i $y_1 = x_{n_1}$. Així,
+  \[
+    \sum_{k=1}^{\infty} \|y_k\| < \Big( \sum_{k=2}^{\infty}
+    \frac{1}{2^k} \Big) + \|x_{n_1}\| < + \infty.
+  \]
+  Per hipòtesi, sabem que $\sum_{k=1}^{\infty} y_k \to y \in E$.
+  Vegem que $x_n \to y$. Tenim que existeix $N \in \mathbb{N}$ tal que
+  per a tot $n,\, m,\, k > N$,
+  \[
+    \|x_n - x_m\| < \frac{\epsilon}{2} \qquad \text{i} \qquad \Big\|
+    \Big( \sum_{i=1}^{k} y_i \Big) - y \Big\| < \frac{\epsilon}{2}.
+  \]
+  Notem que per a tot $k \in \mathbb{N}$,
+  \[
+    \sum_{i=1}^{k} y_k = \sum_{i=2}^{k} (x_{n_k} - x_{n_{k-1}}) + x_{n_1}
+    = x_{n_k}
+  \]
+  Així, per a tot $n > N$ tenim que
+  \[
+    \|x_n - y\| \leq \|x_n - x_{n_k}\| + \|x_{n_k} - y\| = \|x_n -
+    x_{n_k}\| + \Big\| \Big( \sum_{i=1}^{k} y_i \Big) - y \Big\| <
+    \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+  \]
+  Per tant, $E$ és un espai de Banach.
+\end{proof}
 
 \section{Espais normats de dimensió finita}
 
@@ -522,7 +568,7 @@ del rectangle de costats $a$ i $b$ és menor o igual a la suma de les
 àrees sota les corbes $\phi(t)$ i $\psi(t)$. Veure la Figura
 \ref{fig:young}.
 
-\begin{figure}[htbp]
+\begin{figure}[hbtp]
   \centering
   \begin{tikzpicture}
     \def\a{2.25}
@@ -536,7 +582,7 @@ del rectangle de costats $a$ i $b$ és menor o igual a la suma de les
     \fill[Violet!20] plot[domain=0:\c, samples=100] (\x,{\x^(\p-1)}) -- (0,\b) -- cycle;
     \fill[MidnightBlue!20] plot[domain=0:\a, samples=100] (\x,{\x^(\p-1)}) -- (\a,0) -- cycle;
     
-    \draw[red,dashed,thick] (0,\b) rectangle (\a,0);
+    \draw[red,dashed,very thick] (0,\b) rectangle (\a,0);
     \draw[blue,thick,domain=0:4.5,samples=100] plot(\x,{\x^(\p-1)}) node[right,blue] {\footnotesize $y=\phi(x)$};
     \node[left] at (0,\b) {\textit{b}};
     \node[below] at (\a,0) {\textit{a}};
@@ -560,12 +606,37 @@ les seues normes.
   \]
 \end{teorema}
 
+\begin{proof}
+  Suposem $x,\, y \neq 0$ i apliquem la desigualtat de Young a
+  $\frac{x_i}{\|x\|_p} \cdot \frac{y_i}{\|y\|_q}$ per a
+  $i = 1, \dotsc, n$,
+  \[
+    \frac{x_i}{\|x\|_p} \cdot \frac{y_i}{\|y\|_q} \leq
+    \frac{1}{p} \frac{x_i^p}{\|x\|_p^p} +
+    \frac{1}{q} \frac{y_i^q}{\|y\|_q^q}.
+  \]
+  Sumant ara aquesta desigualtat per a cada coordenada,
+  \begin{equation*}
+    \sum_{i=1}^{n} \frac{x_i}{\|x\|_p} \cdot \frac{y_i}{\|y\|_q}
+    \leq \sum_{i=1}^{n} \left( \frac{1}{p} \frac{x_i^p}{\|x\|_p^p} +
+      \frac{1}{q} \frac{y_i^q}{\|y\|_q^q} \right)
+    = \frac{1}{p}
+    \underbracket{\frac{\sum_{i=1}^{n} x_i^p}{\|x\|_p^p}}_1 +
+    \frac{1}{q}
+    \underbracket{\frac{\sum_{i=1}^{n} y_i^q}{\|y\|_q^q}}_1 = 1,
+  \end{equation*}
+  ja que $q$ és l'exponent conjugat de $p$. Per tant,
+  \[
+    \sum_{i=1}^{n} x_iy_i \leq \|x\|_p \|y\|_q.\qedhere
+  \]
+\end{proof}
+
 Notem que en la desigualtat anterior podem considerar
 $x_i, \, y_i \in \mathbb{C}$ per a $i = 1, 2, \dotsc, n$, i la
 desigualtat continua sent vàlida.
 
-La desigualtat de Minkowski ens permet fitar la norma de la suma de
-dos vectors en $\mathbb{R}^n$.
+Vegem ara la desigualtat de Minkowski. Aquesta ens permet fitar la
+norma de la suma de dos vectors en $\mathbb{R}^n$.
 
 \begin{teorema}[Desigualtat de Minkowski]
   Siguen $p > 1$ i $x,\, y \in \mathbb{R}^n$, aleshores
@@ -575,6 +646,47 @@ dos vectors en $\mathbb{R}^n$.
     \Big( \sum_{i=1}^{n} |y_i|^p \Big)^{\frac{1}{p}}.
   \]
 \end{teorema}
+
+\begin{proof}
+  Siga $q$ tal que $\frac{1}{p}+\frac{1}{q} = 1$,
+  \begin{align*}
+    \sum_{i=1}^{n} |x_i + y_i|^p
+    &= \sum_{i=1}^{n} |x_i + y_i|^{p-1} |x_i + y_i|
+      = \sum_{i=1}^{n} |x_i + y_i|^{p-1}(|x_i| + |y_i|) \\
+    &= \Big( \sum_{i=1}^{n}
+      \textcolor{teal}{|x_i+y_i|^{p-1}} \textcolor{violet}{|x_i|} \Big) +
+      \Big( \sum_{i=1}^{n}
+      \textcolor{teal}{|x_i+y_i|^{p-1}} \textcolor{violet}{|y_i|} \Big) \\
+    &\overset{\mathclap{\text{Hölder}}}{\leq} \;\;\,
+      \textcolor{teal}{\Big(\sum_{i=1}^{n} |x_i+y_i|^{(p-1)q}\Big)^{\frac{1}{q}}}
+      \textcolor{violet}{\|x\|_p} +
+      \textcolor{teal}{\Big(\sum_{i=1}^{n} |x_i+y_i|^{(p-1)q}\Big)^{\frac{1}{q}}}
+      \textcolor{violet}{\|y\|_p} \\
+    &= \left[\Big(\sum_{i=1}^{n} |x_i+y_i|^{(p-1)q}\Big)^{\frac{1}{q}}\right]
+      \left( \|x\|_p + \|y\|_p \right).
+  \end{align*}
+  Observem ara que $\frac{1}{p} + \frac{1}{q} = 1$ implica que
+  $p+q = pq$ i, per tant,
+  \[
+    (p-1)q = pq - q = (p+q) - q = p.
+  \]
+  Aplicant açò al que teníem,
+  \[
+    \sum_{i=1}^{n} |x_i + y_i|^p \leq \left[ \Big( \sum_{i=1}^{n}
+      |x_i+y_i|^{p} \Big)^{\frac{1}{q}} \right] \left( \|x\|_p +
+      \|y\|_p \right) = \|x + y\|_p^{\frac{p}{q}} \left( \|x\|_p +
+      \|y\|_p \right)
+  \]
+  i com que $1 + \frac{p}{q} = p$, tenim que $\frac{p}{q} = p-1$ i
+  \[
+    \|x + y\|_p^p = \sum_{i=1}^{n} |x_i+y_1|^p \leq \|x+y\|_p^{p-1}
+    (\|x\|_p+\|y\|_p).
+  \]
+  Amb tot, $\|x+y\|_p^{p-(p-1)} \leq \|x\|_p + \|y\|_p$ i obtenim
+  \[
+    \|x+y\|_p \leq \|x\|_p + \|y\|_p. \qedhere
+  \]
+\end{proof}
 
 Ara que hem demostrat les desigualtats de Hölder i Minkowski, podem
 demostrar que l'espai $\mathbb{K}^n$ és un espai normat amb
@@ -607,10 +719,42 @@ $\|\cdot\|_p$.
   \]
 \end{defi}
 
+A la Figura \ref{fig:normes-equiv} vegem la idea visual d'aquesta
+definició.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=.9]
+    \draw[thick,->] (-1.5,0) -- (1.5,0);
+    \draw[thick,->] (0,-1.5) -- (0,1.5);
+    \draw[OliveGreen, very thick] (-0.75,0) -- (0,0.75) -- (0.75,0) -- (0,-0.75) -- cycle;
+
+    \draw[thick,->] (3,0) -- (6,0);
+    \draw[thick,->] (4.5,-1.5) -- (4.5,1.5);
+    \draw[RedViolet, very thick] (4.5,0) circle(0.75);
+
+    \draw[thick,->] (7.5,0) -- (10.5,0);
+    \draw[thick,->] (9,-1.5) -- (9,1.5);
+    \draw[OliveGreen, very thick] (7.75,0) -- (9,1.25) -- (10.25,0) -- (9,-1.25) -- cycle;
+    \draw[RedViolet, very thick] (9,0) circle(0.75);
+    \draw[OliveGreen, very thick] (8.4,0) -- (9,0.6) -- (9.6,0) -- (9,-0.6) -- cycle;
+  \end{tikzpicture}
+  \caption{$\|\cdot\|_1$ i $\|\cdot\|_2$ són normes equivalents.}
+  \label{fig:normes-equiv}
+\end{figure}
+
+El següent resultat justifica per què hem d'abandonar els espais de
+dimensió finita, ja que si sols hi ha una norma hi ha poc a fer.
+
 \begin{teorema}[Equivalència de normes en $\mathbb{K}^n$]
   Siga $n \in \mathbb{N}$, aleshores totes les normes en
   $\mathbb{K}^n$ són equivalents.
 \end{teorema}
+
+\begin{proof}
+  \color{red}\sffamily\bfseries
+  FALTA 
+\end{proof}
 
 És important remarcar el següent resultat que no demostrarem en aquest
 curs. La demostració d'aquest resultat s'estudia al curs d'Anàlisi
@@ -646,6 +790,15 @@ Funcional.
   En tots els casos, l'espai $(\ell^p, \|\cdot\|_p)$ és un espai
   normat.
 \end{defi}
+
+\begin{prop}
+  L'espai $(\ell^p, \|\cdot\|)$ és un espai normat
+\end{prop}
+
+\begin{proof}
+  \color{red}\sffamily\bfseries
+  FALTA 
+\end{proof}
 
 \begin{teorema}
   Per a $1 \leq p \leq \infty$, l'espai $\ell^p$ és un espai de
@@ -703,7 +856,7 @@ segueix.
 
 \begin{teorema}
   Per a $1 \leq p < q \leq \infty$, es compleix que
-  $\ell^p \subset l^q$.
+  $\ell^p \subset \ell^q$.
 \end{teorema}
 
 \section{Espais de Lebesgue \texorpdfstring{$L^p(\Omega)$}{Lp}}
@@ -758,10 +911,10 @@ Hölder i Minkowski per a integrals.
     &\leq \int_\Omega \frac{|f(x)|^p}{p\|f\|_p^p} +
       \frac{|g(x)|^q}{q\|g\|_q^q} \,\mathrm{d}x \\
     &=\frac{1}{p} \cdot
-      \underbrace{\frac{\int_\Omega|f(x)|^p\,\mathrm{d}x}{\|f\|_p^p}}_1 +
+      \underbracket{\frac{\int_\Omega|f(x)|^p\,\mathrm{d}x}{\|f\|_p^p}}_1 +
       \frac{1}{q} \cdot
-      \underbrace{\frac{\int_\Omega|g(x)|^q\,\mathrm{d}x}{\|g\|_q^q}}_1
-      = \frac{1}{p} + \frac{1}{q} = 1.
+      \underbracket{\frac{\int_\Omega|g(x)|^q\,\mathrm{d}x}{\|g\|_q^q}}_1
+      = \frac{1}{p} + \frac{1}{q} = 1
   \end{align*}
   Així, tenim que $fg \in \mathcal{L}^1(\Omega)$ i 
   \(
