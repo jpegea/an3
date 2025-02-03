@@ -470,8 +470,8 @@ a espais de Banach.
   \]
   Notem que per a tot $k \in \mathbb{N}$,
   \[
-    \sum_{i=1}^{k} y_k = \sum_{i=2}^{k} (x_{n_k} - x_{n_{k-1}}) + x_{n_1}
-    = x_{n_k}
+    \sum_{i=1}^{k} y_k = x_{n_1} + \sum_{i=2}^{k} x_{n_k} -
+    x_{n_{k-1}} = x_{n_k}
   \]
   Així, per a tot $n > N$ tenim que
   \[
@@ -719,8 +719,9 @@ $\|\cdot\|_p$.
   \]
 \end{defi}
 
-A la Figura \ref{fig:normes-equiv} vegem la idea visual d'aquesta
-definició.
+Notem que ser normes equivalents és, valga la redundància, una relació
+d'equivalència. A la Figura \ref{fig:normes-equiv} vegem la idea
+visual d'aquesta definició.
 
 \begin{figure}[htbp]
   \centering
@@ -752,8 +753,43 @@ dimensió finita, ja que si sols hi ha una norma hi ha poc a fer.
 \end{teorema}
 
 \begin{proof}
-  \color{red}\sffamily\bfseries
-  FALTA 
+  Siga $\|\cdot\|$ una norma qualsevol en $\mathbb{K}^n$, demostrem
+  que $\|\cdot\|$ és equivalent a $\|\cdot\|_2$. Considerem $x = (x_1, x_2 \dotsc, x_n) \in \mathbb{K}^n$. Aleshores
+  \[
+    |x_i| \leq \Big( \sum_{j=1}^{n} |x_j|^2 \Big)^{\frac{1}{2}} =
+    \|x\|_2, \qquad i = 1, \dotsc, n.
+  \]
+  Per tant,
+  \[
+    \|x\| = \Big\| \sum_{i=1}^{n} x_i e_i \Big\| \leq \sum_{i=1}^{n}
+    |x_i| \|e_i\| \leq \sum_{i=1}^{n} \|x\|_2 \|e_i\| = \|x\|_2
+    \sum_{i=1}^{n} \|e_i\|.
+  \]
+  Així, tenim $\|x\| \leq C\|x\|_2$ amb la constant
+  $C = \sum_{i=1}^{n} \|e_i\|$. Per a l'altra desigualtat, considerem
+  $S = \{x \in \mathbb{K}^n : \|x\|_2 = 1\}$. Notem que $S$ és tancat
+  i fitat i, per tant, $S$ és un conjunt compacte. Com que la funció
+  \begin{equation*}
+    \begin{array}{lrcl}
+      f : & (\mathbb{K}^n, \|\cdot\|) & \longrightarrow & \mathbb{R}, \\
+          & x & \longmapsto & \|x\|,
+    \end{array}
+  \end{equation*}
+  és contínua en un compacte, aleshores existeix $x_0 \in S$ tal que
+  $f$ pren el seu valor mínim en $S$ en aquest punt. És a dir,
+  $\|x\| \geq \|x_0\|$ per a tot $x \in S$. Aleshores, si
+  $x \in \mathbb{K}^n$ i $x \neq 0$, tenim que
+  \[
+    \frac{x}{\|x\|_2} \in S \qquad \text{i} \qquad \left\|
+      \frac{x}{\|x\|_2} \right\| \geq \|x_0\|, \quad \forall\, x \in
+    \mathbb{K}^n,\; x \neq 0.
+  \]
+  Aleshores, si posem $D = \|x_0\|$, podem escriure
+  $\|x\| \geq D \|x\|_2$ per a tot $x \in \mathbb{K}^n$. Observem que
+  $D = \|x_0\| \neq 0$ ja que $x_0 \in S$. Així, concloem que
+  \[
+    D \|x\|_2 \leq \|x\| \leq C \|x\|_2. \qedhere
+  \]
 \end{proof}
 
 És important remarcar el següent resultat que no demostrarem en aquest
@@ -796,8 +832,30 @@ Funcional.
 \end{prop}
 
 \begin{proof}
-  \color{red}\sffamily\bfseries
-  FALTA 
+  La positivitat i homogeneïtat són directes i queda comprovar que es
+  compleix la desigualtat triangular. Suposem $p < \infty$. Fixat
+  $n \in \mathbb{N}$ i $x,\, y \in \ell^p$, tenim que
+  \begin{align*}
+    \Big( \sum_{i=1}^{n} |x_i+y_i|^p \Big)^{\frac{1}{p}}
+    &\leq \Big( \sum_{i=1}^{n} |x_i|^p \Big)^{\frac{1}{p}}
+      + \Big( \sum_{i=1}^{n} |y_i|^p \Big)^{\frac{1}{p}} \\
+    &\leq \Big( \sum_{i=1}^{\infty} |x_i|^p \Big)^{\frac{1}{p}}
+      + \Big( \sum_{i=1}^{\infty} |y_i|^p \Big)^{\frac{1}{p}}
+      = \|x\|_p + \|y\|_p.
+  \end{align*}
+  Prenent límits quan $n \to \infty$, tenim
+  \[
+    \|x+y\|_p = \Big( \sum_{i=1}^{n} |x_i+y_i|^p \Big)^{\frac{1}{p}}
+    \leq \|x\|_p + \|y\|_p.
+  \]
+  Suposem ara que $p = \infty$. Notem que, per a tot
+  $n \in \mathbb{N}$, $x,\, y \in \ell^\infty$. Així,
+  $|x_n + y_n| \leq |x_n| + |y_n| \leq \|x\|_\infty + \|y\|_\infty$ i,
+  per tant,
+  \[
+    \|x+y\|_\infty = \sup_{n \in \mathbb{N}} |x_n+y_n| \leq
+    \|x\|_\infty + \|y\|_\infty. \qedhere
+  \]
 \end{proof}
 
 \begin{teorema}
@@ -1127,10 +1185,98 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   \]
 \end{teorema}
 
+\begin{proof}
+  Per a cada $n \in \mathbb{N}$ definim
+  \[
+    g_n(x) = \inf_{k \geq n} f_k(x), \quad \forall\, x \in \Omega.
+  \]
+  Notem que $(g_n)_{n=1}^\infty$ és una successió creixent de funcions
+  mesurables i positives amb
+  \[
+    \liminf_{k \to \infty} f_k(x) = \lim_{n \to \infty} g_n(x) \quad
+    \text{i} \quad f_n(x) \geq g_n(x), \qquad \forall\, x \in \Omega.
+  \]
+  Per tant, com que $g_n$ és una successió creixent de funcions
+  positives i aplicant el Teorema de la Convergència Monòtona,
+  \begin{align*}
+    \int_\Omega \liminf_{n \to \infty} f_n(x)\, \mathrm{d}x
+    &= \int_\Omega \lim_{n \to \infty} g_n(x)\, \mathrm{d}x
+      \overset{\text{TCM}}{=}
+      \lim_{n \to \infty} \int_\Omega g_n(x)\, \mathrm{d}x \\
+    &= \liminf_{n \to \infty} \int_\Omega g_n(x)\, \mathrm{d}x
+      \leq \liminf_{n \to \infty} \int_\Omega f_n(x)\, \mathrm{d}x.
+      \qedhere
+  \end{align*}
+\end{proof}
+
 \begin{teorema}[$L^p(\Omega)$ és un espai de Banach]
   Per a $1 \leq p < \infty$, l'espai de Lebesgue $L^p(\Omega)$ és un
   espai de Banach.
 \end{teorema}
+
+\begin{proof}
+  Siga $(f_n)_{n=1}^\infty$ una successió de Cauchy amb
+  $f_n \in L^p(\Omega)$. Per tant, fixat $\epsilon > 0$, existeix
+  $N \in \mathbb{N}$ tal que
+  \[
+    \|f_n - f_m\|_p < \epsilon, \quad \text{si} \;\; m,\,n > N.
+  \]
+  Per a cada natural $k \in \mathbb{N}$, definim $n_k \in \mathbb{N}$
+  tal que 
+  \[
+    \|f_{n_k} - f_{n_{k+1}}\|_p < 2^{-k}
+  \]
+  i $n_1 < n_2 < \dotsb < n_k < \dotsb$. Definim ara
+  \[
+    g_m(x) = f_{n_1}(x) + \sum_{k=1}^{m} f_{n_{k+1}}(x) - f_{n_k},
+    \quad m \in \mathbb{N}.
+  \]
+  Per la desigualtat de Minkowski,
+  \[
+    \|g_m\|_p^p = \left( \int_\Omega |g_m(x)|^p\, \mathrm{d}x
+    \right)^{\frac{1}{p}} \leq \|f_{n_1}(x)\|_p + \sum_{k=1}^{m}
+    \|f_{n_{k+1}} - f_{n_k}\|_p \leq \|f_{n_1}\|_p + 1.
+  \]
+  Notem que
+  \[
+    |f_{n_1}(x)| + \sum_{k=1}^{m} |(f_{n_{k+1}} - f_{n_k})(x)| 
+  \]
+  és una succcessió creixent de funcions mesurables i pel Teorema de
+  la Convergència Monòtona és convergent. Per tant,
+  \[
+    f_{n_1} + \sum_{k=1}^m (f_{n_{k+1}} - f_{n_k})(x)
+  \]
+  convergeix a una funció $f$ quasi per totes parts en $\Omega$. Vegem
+  ara que $f$ està en $L^p(\Omega)$ i comprovem que
+  \[
+    f_n \xrightarrow{\|\cdot\|_p} f.
+  \]
+  Fixat $\epsilon > 0$ i considerant $N \in \mathbb{N}$ suficientment
+  gran,
+  \begin{align*}
+    \int_\Omega |(f_{n_k} - f)(x)|^p \, \mathrm{d}x
+    &= \int_{\Omega} \liminf_{n\to\infty}
+      |(f_{n_k} - f_{n_m})(x)|^p\, \mathrm{d}x \\
+    &\overset{\mathclap{\text{Fatou}}}{\leq} \;\;
+      \liminf_{m \to \infty} \int_{\Omega}
+      |f_{n_k} - f_{n_m}(x)|^p\, \mathrm{d}x \leq \epsilon^p,
+      \quad \text{si} \;\; n_k > N.
+  \end{align*}
+  Així, per a $n$ gran,
+  \[
+    \left( \int_\Omega |f(x)|^p\, \mathrm{d}x \right)^{\frac{1}{p}}
+    \leq \underbrace{\left( \int_\Omega |f_n(x)|^p\, \mathrm{d}x
+      \right)^{\frac{1}{p}}}_{\|f_n\|_p} + \underbrace{\left(
+        \int_\Omega |(f_n-f)(x)|^p \right)^{\frac{1}{p}}}_{\|f_n -
+      f\|_p} \leq \|f_n\|_p + 1 < +\infty
+  \]
+  i, per tant, $f \in L^p(\Omega)$. Per últim, notem que
+  \[
+    \|f_n - f\|_p \leq \|f_{n_k} - f_n\|_p + \|f_{n_k} - f\|_p <
+    \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon,
+  \]
+  si $n$ i $n_k$ són suficientment grans.
+\end{proof}
 
 \begin{coro}
   Per a $1 \leq p < \infty$, si $f_n \to f$ en $L^p(\Omega)$,
@@ -1164,8 +1310,10 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   La norma de l'operador $T$ és la menor constant $C > 0$ que verifica
   la desigualtat anterior, és a dir,
   \begin{align*}
-    \|T\| &= \inf\{C > 0 : \|T(x)\|_F \leq C, \;\; \forall\, x \in E, \;\; \|x\|_E \leq 1\} \\
-          &= \inf\{C > 0 : \|T(x)\|_F \leq C \|x\|_E, \;\; \forall\, x \in E\}.
+    \|T\| &= \inf\{C > 0 : \|T(x)\|_F \leq C,
+            \;\; \forall\, x \in E, \;\; \|x\|_E \leq 1\} \\
+          &= \inf\{C > 0 : \|T(x)\|_F \leq C \|x\|_E,
+            \;\; \forall\, x \in E\}.
   \end{align*}
   on la segon igualtat se segueix de l'homogeneïtat de la norma i la
   linealitat de $T$.
@@ -1176,7 +1324,8 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   l'aplicació lineal
   \begin{equation*}
     \begin{array}{lrcl}
-      \varphi : & (\mathbb{R}^n, \|\cdot\|_p) &\longrightarrow& \mathbb{R} \\
+      \varphi :
+      & (\mathbb{R}^n, \|\cdot\|_p) &\longrightarrow& \mathbb{R} \\
       & x &\longmapsto& \langle a, x \rangle = \sum\limits_{i=1}^{n}a_ix_i.
     \end{array}
   \end{equation*}
@@ -1188,8 +1337,11 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   L'operador
   \[
     \begin{array}{lrcl}
-      T : & (\mathcal{C}[0,1], \|\cdot\|_\infty) &\longrightarrow& (\mathcal{C}[0,1], \|\cdot\|_\infty), \\
-      & f &\longmapsto& T(f) = \int_0^x f(t)\, \mathrm{d}t, \quad x \in [0,1],
+      T :
+      & (\mathcal{C}[0,1], \|\cdot\|_\infty) & \longrightarrow
+      & (\mathcal{C}[0,1], \|\cdot\|_\infty), \\
+      & f &\longmapsto
+      & T(f) = \int_0^x f(t)\, \mathrm{d}t, \quad x \in [0,1],
     \end{array}
   \]
   és un operador lineal de norma $1$.
