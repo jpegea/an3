@@ -34,6 +34,7 @@
 \newtheoremstyle{nota}{}{}{\sffamily}{}{\bfseries\sffamily\color{purple!85!black}}{.}{.5em}{}
 \theoremstyle{nota}
 \newtheorem{nota}[teorema]{Nota}
+\newtheorem*{nota*}{Nota}
 \newtheoremstyle{exemple}{}{}{\sffamily}{}{\bfseries\sffamily\color{green!40!black}}{.}{.5em}{}
 \theoremstyle{exemple}
 \newtheorem{exemple}[teorema]{Exemple}
@@ -202,7 +203,7 @@ conté tota la informació topològica de l'espai.
   \end{description}
 \end{prop}
 
-Com hem mencionat, la bola oberta de radi $r$ centrada en l'origne
+Com hem mencionat, la bola oberta de radi $r$ centrada en l'origen
 conté tota la informació topològica de l'espai. Per tant, la primera
 propietat de la proposició anterior pot millorar-se obtenint que la
 norma és uniformement contínua en l'espai.
@@ -295,9 +296,9 @@ operacions de suma de vectors i producte per escalars.
   \end{align*}
 \end{proof}
 
-\begin{nota}
+\begin{nota*}
   La condició 3 es pot reescriure com que $T$ és Lipschitz contínua.
-\end{nota}
+\end{nota*}
 
 \begin{exemple}
   Per a cada funció $\varphi : [a,b] \to [a,b]$ contínua, l'aplicació
@@ -1291,6 +1292,39 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   convergència d'aquesta en $L^p(\Omega)$.
 \end{teorema}
 
+\begin{proof}
+  Si $f \in L^p(\Omega)$, aleshores $|f(x)|^q = (|f|^p)^{\frac{q}{p}}$
+  i $|f|^q \in L^1(\Omega)$. Per tant,
+  $|f|^p \in L^{\frac{q}{p}}(\Omega)$. Denotem $s = \frac{q}{p} > 1$ i
+  $s'$ el seu exponent conjugat. Així,
+  \begin{align*}
+    \int_\Omega |f(x)|^p\, \mathrm{d}x
+    &= \int_\Omega |f(x)|^p |\chi_\Omega(x)|\, \mathrm{d}x \;
+      \overset{\text{Hölder}}{\leq} \;
+      \textcolor{gray}{
+      \quad
+      \left(
+      \begin{array}{c}
+        |f(x)|^p \in \mathcal{L}^s(\Omega) \\
+        \chi_\Omega \in \mathcal{L}^{s'}(\Omega)
+      \end{array}\right)} \\
+    &\leq \left( \int_\Omega \left(|f(x)|^{p}\right)^s
+      \, \mathrm{d}x \right)^{\frac{1}{s}}
+      \left( \int_\Omega |\chi_\Omega(x)|^{s'} \right)^{\frac{1}{s'}} \\
+    &\leq \left( \int_\Omega |f(x)|^{q}
+      \, \mathrm{d}x \right)^{\frac{p}{q}}
+      \left( m(\Omega) \right)^{\frac{1}{s'}}
+      = \|f\|_q^p(m(\Omega))^{\frac{1}{s'}} < +\infty
+  \end{align*}
+  on hem gastat que $f \in L^q(\Omega)$ i $m(\Omega) < +\infty$. Per
+  tant, $f \in L^p(\Omega)$. A més, notem que $\|f\|_p \leq C \|f\|_q$
+  si $C = (m(\Omega))^{\frac{1}{sp}}$.
+\end{proof}
+
+\begin{nota*}
+  Notem que $\ell^p = L^p(\Omega)$ quan $\Omega = \mathbb{N}$.
+\end{nota*}
+
 \section{Operadors entre espais normats}
 
 \begin{defi}[Norma d'un operador fitat]
@@ -1333,6 +1367,47 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   $\|\varphi\| = \|a\|_q$.
 \end{exemple}
 
+\begin{proof}
+  Considerem $a \in \mathbb{R}^n$ amb $a \neq 0$. Comprovem el resultat per al cas $1 < p < + \infty$. Per a cada $i$ amb $1 \leq i \leq n$ i siga $b_i$ tal que $b_i a_i = |a_i|^q$, escrivim
+  \[
+    b = (b_1, \dotsc, b_n) \qquad \text{i} \qquad C =
+    \frac{b}{\|b\|_p} \in \overline{B_{\|\cdot\|_p} (0,1)}.
+  \]
+  Tenim que
+  \[
+    \|b\|_p = \Big( \sum_{i=1}^{n} |b_i|^p \Big)^{\frac{1}{p}} = \Big(
+    \sum_{i=1}^{n} \left( |a_i|^{q-1} \right)^p \Big)^{\frac{1}{p}} =
+    \Big( \sum_{i=1}^{n} |a_i|^q \Big)^{\frac{1}{p}} =
+    \|a\|_q^{\frac{q}{p}}.
+  \]
+  Calculem ara $\varphi(C)$,
+  \begin{align*}
+    \varphi(C)
+    &= \varphi\left( \frac{b}{\|b\|_p} \right)
+      = \sum_{i=1}^{n} \frac{a_ib_i}{\|b\|_p}
+      = \frac{1}{\|b\|_p} \sum_{i=1}^{n} a_ib_i
+      = \frac{1}{\|b\|_p} \sum_{i=1}^{n} a_i^q \\
+    &= \frac{1}{\|b\|_p} \|a\|_q^q 
+      = \frac{\|a\|_q^q}{\|a\|_q^{q/p}}
+      = \|a\|_q^{q - \frac{q}{p}}
+      = \|a\|_q^{\frac{pq-q}{p}}
+      = \|a\|_q^p/p
+      = \|a\|_q.
+  \end{align*}
+  Com que $C \in \overline{B_{\|\cdot\|_p}(0,1)}$ i $\|\phi\|$ és el
+  suprem deduïm que $\|\varphi\| \geq \|a_q\|$. Queda vore que
+  $\|\varphi\| \leq \|a\|_q$. Considerem $x \in B_{\|\cdot\|_p}(0,1)$
+  amb $\|x\|_p = 1$. Aleshores
+  \begin{align*}
+    |\varphi(x)| = \Big| \sum_{i=1}^{n} a_i x_i \Big|
+    &\leq \sum_{i=1}^{n} |a_i x_i| \\
+    &\overset{\mathclap{\text{Hölder}}}{\leq} \;\;\,
+      \Big(\sum_{i=1}^{n} |a_i|^q \Big)^{\frac{1}{q}}
+      \Big( \sum_{i=1}^{n} |x_i|^p \Big)^{\frac{1}{p}}
+      = \|a\|_q \|x\|_p = \|a\|_q. \qedhere
+  \end{align*}
+\end{proof}
+
 \begin{exemple}
   L'operador
   \[
@@ -1346,6 +1421,39 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   \]
   és un operador lineal de norma $1$.
 \end{exemple}
+
+\begin{proof}
+  Tenim
+  \begin{equation*}
+    \begin{array}{lrcl}
+      T :
+      & (\mathcal{C}[0,1], \|\cdot\|_\infty)
+      & \longrightarrow
+      & (\mathcal{C}[0,1], \|\cdot\|_\infty) \\
+      & f
+      & \longmapsto
+      &
+        \begin{array}[t]{lrcl}
+          T(f) & [0,1] & \to & \mathbb{R} \\
+               & x & \mapsto & \int_0^x f(x)\, \mathrm{d}t
+        \end{array}
+    \end{array}
+  \end{equation*}
+  Per tant,
+  \[
+    \|T\| = \sup_{f \in \mathcal{C}[0,1]} \|T(f)\| = \sup_{f \in
+      \mathcal{C}[0,1]} \left( \sup_{f \in \mathcal{C}[0,1]} \left|
+        \int_0^x f(t)\, \mathrm{d}t \right| \right).
+  \]
+  Notem ara que
+  \[
+    \left| \int_0^x f(t)\, \mathrm{d}t \right| \leq \int_0^x |f(t)|\,
+    \mathrm{d}t \leq \int_0^x \|f\|_\infty\, \mathrm{d}t = x
+    \|f\|_\infty \leq 1.
+  \]
+  Aleshores, $\|T\| < 1$. A més, notem que si $f(x) = 1$, aleshores
+  $\|T(f)\|_\infty = 1$. Així, concloem que $\|T\| = 1$.
+\end{proof}
 
 \begin{defi}[L'espai dels operadors fitats]
   Donats dos espais normats $E$ i $F$, denotem per
@@ -1369,10 +1477,49 @@ el seu límit inferior sempre existirà i es pot demostrar el Lema de Fatou (Teo
   $\|S \circ T\| \leq \|S\| \|T\|$.
 \end{teorema}
 
+\begin{proof}
+  Volem vore que $\|S \circ T\| \leq \|S\| \|T\|$. Observem que
+  \[
+    \|(S \circ T)(x)\| = \|S(T(x))\| \leq \|S\| \|T(x)\| \leq
+    \|S\| \|T\| \|x\|.
+  \]
+  Per tant, com $x \in B(0,1)$, $\|S \circ T\| \leq \|S\| \|T\|$.
+\end{proof}
+
 \begin{teorema}
   Si $F$ és un espai de Banach, aleshores l'espai
   $(L(E,F), \|\cdot\|)$ és un espai de Banach.
 \end{teorema}
+
+\begin{proof}
+  Siga $(T_n)_{n=1}^\infty \subset L(E, F)$ una successió de
+  Cauchy. Aleshores, per a tot $x \in E$, tenim que
+  $(T_n(x))_{n=1}^\infty$ és també una successió de Cauchy. Per ser
+  $F$ un espai de Banach, tenim que existeix el límit
+  \[
+    \lim_{n \to \infty} T_n(x), \quad \forall\, x \in E.
+  \]
+  Definim
+  \[
+    T(x) = \lim_{n \to \infty} T_n(x), \quad \forall\, x \in E
+  \]
+  i notem que $T$ és lineal ja que cada $T_n$ és lineal. Per a vore
+  que $T$ és fitat,
+  \[
+    \|T(x)\|_F = \|\lim_{n \to \infty} T_n(x)\|_F = \lim_{n \to
+      \infty} \|T_n(x)\| \leq C \|x\|
+  \]
+  on l'última desigualtat la justifiquem amb que $(T_n)_{n=1}^\infty$
+  és de Cauchy i, per tant, fitada per $C$. Notem ara que, per a cada
+  $\epsilon > 0$, existeix $N \in \mathbb{N}$ tal que
+  $\|T_n - T_m\| < \epsilon$ per a tot $n,\, m > N$. Per tant,
+  \[
+    \|T_n - T\| = \left\| T_n - \lim_{m \to \infty} T_m\right\| =
+    \lim_{n \to \infty} \|T_n - T_m\| \leq \epsilon, \quad \forall\, n
+    > N.
+  \]
+  Aleshores, $T_n \to T$ en $(L(E,F), \|\cdot\|)$.
+\end{proof}
 
 \begin{defi}[Espai dual]
   Donat un espai normat $E$, l'espai dual de $E$, denotat per $E^*$,
